@@ -2,7 +2,7 @@ import { JwtSignOptions } from '@nestjs/jwt';
 
 export const jwtAccessConfig: JwtSignOptions = {
   secret: process.env.JWT_ACCESS_SECRET,
-  expiresIn: '60s',
+  expiresIn: '30d',
 };
 
 export const jwtRefreshConfig: JwtSignOptions = {

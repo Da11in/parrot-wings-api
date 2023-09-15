@@ -3,14 +3,18 @@ import {
   Controller,
   Get,
   Query,
+  Request,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ControllerPaths } from 'src/shared/constants/controller-paths';
 import { PublicUserProfileDTO } from './dtos/PublicUserProfile.dto';
 import { UserProfileDTO } from './dtos/UserProfile.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @UseInterceptors(ClassSerializerInterceptor)
+@UseGuards(AuthGuard)
 @Controller(ControllerPaths.USERS)
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -26,8 +30,9 @@ export class UserController {
   }
 
   @Get('/me')
-  async me(): Promise<UserProfileDTO> {
-    const user = await this.userService.findOne();
+  async me(@Request() req): Promise<UserProfileDTO> {
+    const id: number = req.userId;
+    const user = await this.userService.findOne({ where: { id } });
     return new UserProfileDTO(user);
   }
 }
