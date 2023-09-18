@@ -3,4 +3,5 @@ export enum ErrorMessages {
   INCORRECT_EMAIL_OR_PASSWORD = 'Incorrect email or password',
   INSUFFICIENT_FUNDS = 'Insufficient funds to complete the transaction',
   RECIPIENT_NOT_FOUND = 'The recipient you specified does not exist',
+  SELF_TRANSACTION = 'You can not send transactions to yourself',
 }

@@ -16,7 +16,7 @@ import {
   jwtRefreshConfig,
   saltOrRoundsValue,
 } from './constants/auth.config';
-import { IAuthResponse } from './interfaces/IAuthResponse';
+import { AuthResponseDTO } from './dtos/AuthResponse.dto';
 import { RefreshTokenDTO } from './dtos/RefreshToken.dto';
 
 @Injectable()
@@ -26,10 +26,10 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async login(loginDto: LoginDTO): Promise<IAuthResponse> {
+  async login(loginDto: LoginDTO): Promise<AuthResponseDTO> {
     const { email, password } = loginDto;
 
-    const user = await this.userService.findOne({ where: { email } });
+    const user = await this.userService.findOne({ email });
 
     if (!user) {
       throw new HttpException(
@@ -56,10 +56,10 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  async signup(signupDto: SignupDTO): Promise<IAuthResponse> {
+  async signup(signupDto: SignupDTO): Promise<AuthResponseDTO> {
     const { email, password } = signupDto;
 
-    const user = await this.userService.findOne({ where: { email } });
+    const user = await this.userService.findOne({ email });
 
     if (user) {
       throw new HttpException(
@@ -82,7 +82,7 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  async refreshJwt(refreshTokenDto: RefreshTokenDTO): Promise<IAuthResponse> {
+  async refreshJwt(refreshTokenDto: RefreshTokenDTO): Promise<AuthResponseDTO> {
     try {
       const payload = await this.jwtService.verifyAsync(
         refreshTokenDto.refreshToken,

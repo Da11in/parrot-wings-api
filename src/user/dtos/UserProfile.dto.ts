@@ -1,11 +1,21 @@
 import { Exclude } from 'class-transformer';
-import { IUser } from '../interfaces/IUser';
+import { User } from '@prisma/client';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class UserProfileDTO implements IUser {
+export class UserProfileDTO implements User {
+  @ApiProperty()
   id: number;
+
+  @ApiProperty()
   email: string;
+
+  @ApiProperty()
   firstName: string;
+
+  @ApiProperty()
   lastName: string;
+
+  @ApiProperty()
   balance: number;
 
   @Exclude()

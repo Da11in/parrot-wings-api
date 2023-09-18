@@ -26,21 +26,17 @@ model User {
 }
 
 model Transaction {
-  id                       Int             @id() @default(autoincrement())
-  createdAt                DateTime        @default(now())
-  type                     TransactionType
-  amount                   Float
-  sender                   User?           @relation("IncomingTransactions", fields: [senderId], references: [id])
-  senderId                 Int?
-  recipient                User?           @relation("OutgoingTransactions", fields: [recipientId], references: [id])
-  recipientId              Int?
-  balanceBeforeTransaction Float
-  balanceAfterTransaction  Float
+  id                                Int      @id() @default(autoincrement())
+  createdAt                         DateTime @default(now())
+  amount                            Float
+  sender                            User?    @relation("IncomingTransactions", fields: [senderId], references: [id])
+  senderId                          Int?
+  recipient                         User?    @relation("OutgoingTransactions", fields: [recipientId], references: [id])
+  recipientId                       Int?
+  senderBalanceBeforeTransaction    Float
+  senderBalanceAfterTransaction     Float
+  recipientBalanceBeforeTransaction Float
+  recipientBalanceAfterTransaction  Float
 
   @@map("transactions")
-}
-
-enum TransactionType {
-  INCOMING
-  OUTGOING
 }

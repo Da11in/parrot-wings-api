@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsJWT } from 'class-validator';
 
-export class RefreshTokenDTO {
+export class AuthResponseDTO {
   @ApiProperty()
-  @IsJWT()
+  accessToken: string;
+
+  @ApiProperty()
   refreshToken: string;
 }
